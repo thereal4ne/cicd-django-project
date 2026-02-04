@@ -1,4 +1,6 @@
-from django.http import HttpResponse
+from django.shortcuts import render
+from .models import Task
 
-def home(request):
-    return HttpResponse("Hello, CI/CD Pipeline!")
+def task_list(request):
+    tasks = Task.objects.all()
+    return render(request, 'tasks.html', {'tasks': tasks})
