@@ -2,5 +2,6 @@ from django.urls import path
 from .views import task_list
 
 urlpatterns = [
-    path('tasks/', task_list, name='task_list'),
+    # Change 'tasks/' to '' to make it the homepage
+    path('', task_list, name='task_list'),
 ]
