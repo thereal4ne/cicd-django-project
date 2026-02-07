@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.urls import reverse
 from .models import Task
 
+
 class TaskTests(TestCase):
 
     def test_create_task(self):
@@ -12,11 +13,11 @@ class TaskTests(TestCase):
 
     def test_complete_task(self):
         task = Task.objects.create(title='Incomplete Task')
-        response = self.client.get(reverse('complete_task', args=[task.id]))
+        self.client.get(reverse('complete_task', args=[task.id]))
         task.refresh_from_db()
         self.assertTrue(task.completed)
 
     def test_delete_task(self):
         task = Task.objects.create(title='Task to Delete')
-        response = self.client.get(reverse('delete_task', args=[task.id]))
+        self.client.get(reverse('delete_task', args=[task.id]))
         self.assertEqual(Task.objects.count(), 0)
