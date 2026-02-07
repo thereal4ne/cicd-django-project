@@ -25,3 +25,8 @@ jobs:
       - name: Run tests
         run: |
           python manage.py test
+
+      - name: Trigger Render Deploy
+        if: success()
+        run: |
+          curl "$RENDER_DEPLOY_HOOK"
