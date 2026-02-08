@@ -1,6 +1,7 @@
 from datetime import date
 
 from django.shortcuts import get_object_or_404, redirect, render
+from django.db.models import F  # ✅ important
 
 from .models import Task
 
@@ -22,12 +23,18 @@ def task_list(request):
     pending_tasks = Task.objects.filter(
         completed=False,
         title__icontains=search_query,
-    ).order_by("due_date", "-created_at")
+    ).order_by(
+        F("due_date").asc(nulls_last=True),  # ✅ fix
+        "-created_at",
+    )
 
     completed_tasks = Task.objects.filter(
         completed=True,
         title__icontains=search_query,
-    ).order_by("due_date", "-created_at")
+    ).order_by(
+        F("due_date").asc(nulls_last=True),  # ✅ fix
+        "-created_at",
+    )
 
     return render(
         request,
